@@ -12,20 +12,31 @@ function App() {
     // Each project is an object with the following properties: title, description, due date, array of tasks, id
   });
 
+  function handleSelect(elemId) {
+    setProjectState((oldState) => {
+      return {
+        ...oldState,
+        selectedProject: elemId,
+      };
+    });
+  }
+
   function updateList(project) {
+    const idElem = Math.random().toFixed(4) * 10000;
     const newProject = {
       ...project,
-      id: Math.random().toFixed(4) * 10000,
+      id: idElem,
     };
     setProjectState((oldState) => {
       return {
         ...oldState,
-        selectedProject: undefined,
-        // projects: oldState.projects.concat(project),
+        selectedProject: idElem,
+        // projects: oldState.projects.concat(project), <-- alternative
         projects: [...oldState.projects, newProject],
       };
     });
   }
+
   function handleCreateNew() {
     setProjectState((oldState) => {
       return {
@@ -34,6 +45,7 @@ function App() {
       };
     });
   }
+
   function handleCancel() {
     setProjectState((oldState) => {
       return {
@@ -53,7 +65,10 @@ function App() {
   } else if (projectState.selectedProject === undefined) {
     content = <Default createClick={handleCreateNew}></Default>;
   } else {
-    content = <Project></Project>;
+    let dataId = projectState.projects.findIndex(
+      (elem) => elem.id === projectState.selectedProject
+    );
+    content = <Project id={dataId} projectState={projectState}></Project>;
   }
   return (
     <>
@@ -61,16 +76,10 @@ function App() {
         <SideBar
           projectState={projectState}
           createClick={handleCreateNew}
+          selectClick={(id) => handleSelect(id)}
         ></SideBar>
         {content}
       </main>
-      {/* <button
-        onClick={() => {
-          console.log(projectState);
-        }}
-      >
-        Check data
-      </button> */}
     </>
   );
 }

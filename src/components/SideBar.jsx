@@ -16,8 +16,11 @@ function SideBar(props) {
           {props.projectState.projects.map((elem) => {
             return (
               <li className="w-full" key={elem.id}>
-                <button className="w-full h-full text-left text-stone-600 hover:text-stone-300 hover:bg-stone-700 py-1 px-4 rounded">
-                  Hello {elem.id}
+                <button
+                  onClick={() => props.selectClick(elem.id)}
+                  className="w-full h-full text-left text-stone-600 hover:text-stone-300 hover:bg-stone-700 py-1 px-4 rounded"
+                >
+                  {elem.title}
                 </button>
               </li>
             );

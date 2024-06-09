@@ -6,13 +6,23 @@ function SideBar(props) {
         Your Projects
       </h2>
       <button
-        onClick={props.onClick}
+        onClick={props.createClick}
         className="px-4 py-2 text-xs md:text-base rounded-md bg-stone-700 text-stone-400 hover:bg-stone-600 hover:text-stone-100"
       >
         + Add Project
       </button>
-      {props.projects.length > 0 && (
-        <ul className="p-4 mt-8 rounded-md bg-stone-100"></ul>
+      {props.projectState.projects.length > 0 && (
+        <ul className="mt-6 flex flex-col gap-3">
+          {props.projectState.projects.map((elem) => {
+            return (
+              <li className="w-full" key={elem.id}>
+                <button className="w-full h-full text-left text-stone-600 hover:text-stone-300 hover:bg-stone-700 py-1 px-4 rounded">
+                  Hello {elem.id}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
       )}
     </aside>
   );

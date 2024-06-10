@@ -1,5 +1,7 @@
-// import { useRef } from "react";
+import Tasks from "./Tasks.jsx";
+import { useRef } from "react";
 export default function Project({ id, projectState, deleteElem }) {
+  const taskAdd = useRef();
   const formattedDate = new Date(
     projectState.projects[id].date
   ).toLocaleDateString("en-US", {
@@ -27,11 +29,25 @@ export default function Project({ id, projectState, deleteElem }) {
         </p>
       </header>
       <div>
-        <h1 className="font-bold text-3xl text-stone-700">Tasks</h1>
-        <form>
-          <input></input>
-          <button>Add task</button>
+        <h1 className="font-bold text-3xl text-stone-700 mb-4">Tasks</h1>
+        <form className="flex justify-between mb-4">
+          <input
+            className="w-[15rem] h-[2rem] rounded-md focus:bg-stone-200 px-4"
+            ref={taskAdd}
+            type="text"
+          ></input>
+          <button
+            className="text-stone-800 hover:text-stone-300 bg-stone-400 hover:bg-stone-700 py-1 px-2 rounded-md"
+            method="form"
+            onClick={(event) => {
+              event.preventDefault();
+              console.log(taskAdd.current.value);
+            }}
+          >
+            Add task
+          </button>
         </form>
+        <Tasks tasksList={projectState.projects[id].tasks}></Tasks>
       </div>
     </div>
   );

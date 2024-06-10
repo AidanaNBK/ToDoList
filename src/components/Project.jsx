@@ -1,5 +1,5 @@
 // import { useRef } from "react";
-export default function Project({ id, projectState }) {
+export default function Project({ id, projectState, deleteElem }) {
   const formattedDate = new Date(
     projectState.projects[id].date
   ).toLocaleDateString("en-US", {
@@ -14,7 +14,10 @@ export default function Project({ id, projectState }) {
           <h1 className="font-bold text-4xl text-stone-700">
             {projectState.projects[id].title}
           </h1>
-          <button className="text-stone-400 hover:text-stone-700">
+          <button
+            onClick={() => deleteElem(id)}
+            className="text-stone-400 hover:text-stone-700"
+          >
             Delete
           </button>
         </div>

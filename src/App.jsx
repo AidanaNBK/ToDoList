@@ -54,6 +54,18 @@ function App() {
       };
     });
   }
+
+  function handleDelete(id) {
+    console.log(id);
+    setProjectState((oldState) => {
+      return {
+        ...oldState,
+        selectedProject: undefined,
+        projects: oldState.projects.splice(id, 1),
+      };
+    });
+  }
+
   let content;
   if (projectState.selectedProject === null) {
     content = (
@@ -68,7 +80,13 @@ function App() {
     let dataId = projectState.projects.findIndex(
       (elem) => elem.id === projectState.selectedProject
     );
-    content = <Project id={dataId} projectState={projectState}></Project>;
+    content = (
+      <Project
+        deleteElem={(id) => handleDelete(id)}
+        id={dataId}
+        projectState={projectState}
+      ></Project>
+    );
   }
   return (
     <>
@@ -77,6 +95,7 @@ function App() {
           projectState={projectState}
           createClick={handleCreateNew}
           selectClick={(id) => handleSelect(id)}
+          selectedId={projectState.selectedProject}
         ></SideBar>
         {content}
       </main>

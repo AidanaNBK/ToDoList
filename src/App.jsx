@@ -79,7 +79,16 @@ function App() {
     });
   }
   function handleDeleteTask(idElem, id) {
-    console.log(projectState.projects[idElem], id);
+    setProjectState((oldState) => {
+      oldState.projects[idElem].tasks.splice(id, 1);
+      let projectsNew = [...oldState.projects];
+      // projectsNew[id].tasks = tasks;
+      return {
+        ...oldState,
+        projects: projectsNew,
+      };
+    });
+    // console.log(projectState.projects[idElem], id);
   }
 
   let content;

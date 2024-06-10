@@ -66,6 +66,22 @@ function App() {
     });
   }
 
+  function handleTasksUpdate(data, id) {
+    // console.log(data, id);
+    setProjectState((oldState) => {
+      let tasks = [...oldState.projects[id].tasks, data];
+      let projectsNew = [...oldState.projects];
+      projectsNew[id].tasks = tasks;
+      return {
+        ...oldState,
+        projects: projectsNew,
+      };
+    });
+  }
+  function handleDeleteTask(idElem, id) {
+    console.log(projectState.projects[idElem], id);
+  }
+
   let content;
   if (projectState.selectedProject === null) {
     content = (
@@ -85,6 +101,8 @@ function App() {
         deleteElem={(id) => handleDelete(id)}
         id={dataId}
         projectState={projectState}
+        updateTasks={(data, id) => handleTasksUpdate(data, id)}
+        deleteTask={(idElem, id) => handleDeleteTask(idElem, id)}
       ></Project>
     );
   }
